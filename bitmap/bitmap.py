@@ -71,26 +71,8 @@ class Bitmap(object):
                 self.pixel_array[i] = color
 
 
-import struct as s
 if __name__ == "__main__":
-    the_bitmap = Bitmap.read_file('test.bmp')
+    the_bitmap = Bitmap.read_file('bmp.bmp')
     # print(the_bitmap.get_headers())
-    # print(the_bitmap.pixel_array[0])
-    # print(the_bitmap.memory_view[1078])
-
-    # the_bitmap.write_file('file3.bmp')
-    # the_bitmap = Bitmap.read_file('bmp.bmp')
-    print(the_bitmap.pixel_array.tobytes()[0:100])
-    print('XXXXXXXXXXXXXXXXXXXXXXXXCXXCXXCXXXXXXXXXDXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX')
-    for i in range(65535):
-        # the_bitmap.pixel_array[i] = the_bitmap.pixel_array[i] + 100
-        the_bitmap.pixel_array[i] = random.randint(0, 255)
-        # if the_bitmap.pixel_array[i] > 255:
-        #     the_bitmap.pixel_array = 255
-    print(the_bitmap.pixel_array.tobytes()[0:100])
-
-the_bitmap.write_file('test4.bmp')
-
-
-
-ord
+    the_bitmap.invert()
+    the_bitmap.write_file('test4.bmp')
