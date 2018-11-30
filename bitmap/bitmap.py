@@ -4,6 +4,7 @@ import struct
 class Bitmap(object):
     def __init__(self, file_data):
         """Initialization method for Bitmap instance.
+
         Provides itemized data related to consumed Bitmap file through the use of a MemoryView object.
         """
         self.source = bytearray(file_data)
@@ -15,16 +16,24 @@ class Bitmap(object):
 
     @classmethod
     def read_file(cls, origin):
-        """Class Method which consumes a file path as input, and returns a Bitmap instance.
-        """
-        # TODO: Complete this method for consuming a file from the file system and creating a BMP instance (cls).
-        pass
+        """Class Method which consumes a file path as input, and returns a Bitmap instance."""
+        with open(origin, 'rb') as binary_data:
+            try:
+                opened_file = binary_data.read()
+                new_binary = Bitmap(opened_file)
+                return new_binary
+            except FileNotFoundError:
+                raise FileNotFoundError('File could not be found')
+            except IOError:
+                raise IOError('The file could not be read')
 
     def write_file(self, target):
-        """Instance Method which accepts a target file path and writes the instance source data to target path.
-        """
-        # TODO: Complete this method for writing a file from to the file system from the BMP instance (self).
-        pass
+        """Instance Method which accepts a target file path and writes the instance source data to target path."""
+        with open(target, 'wb') as target_file:
+            try:
+                target_file.write(self.source)
+            except IOError:
+                print('The file could not be written')
 
     def get_headers(self):
         """Instance Method which provides instance source data as readable output to std out.
@@ -35,7 +44,7 @@ class Bitmap(object):
             Size: {s.unpack('I', self.memory_view[2:6].tobytes())[0]}
             Reserved 1: {s.unpack('H', self.memory_view[6:8].tobytes())[0]}
             Reserved 2: {s.unpack('H', self.memory_view[8:10].tobytes())[0]}
-            Offset: {s.unpack('I', self.memory_view[10:14].tobytes())[0]}            
+            Offset: {s.unpack('I', self.memory_view[10:14].tobytes())[0]}
             DIB Header Size: {s.unpack('I', self.memory_view[14:18].tobytes())[0]}
             Width: {s.unpack('I', self.memory_view[18:22].tobytes())[0]}
             Height: {s.unpack('I', self.memory_view[22:26].tobytes())[0]}
@@ -50,4 +59,8 @@ class Bitmap(object):
         '''
         return result
 
-    # TODO: Write your instance methods for transformations here as part of the Bitmap class.
+
+if __name__ == "__main__":
+    the_bitmap = Bitmap.read_file('test.bmp')
+    print(the_bitmap.source)
+    the_bitmap.write_file('file3.bmp')
