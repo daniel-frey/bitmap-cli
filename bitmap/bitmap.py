@@ -1,4 +1,5 @@
 import struct
+import random
 
 
 class Bitmap(object):
@@ -59,8 +60,19 @@ class Bitmap(object):
         '''
         return result
 
+    def invert(self):
+            """Invert the colors of a bitmap.
+
+            No input/output
+            """
+            for i in range(len(self.pixel_array)):
+                color = abs(255 - self.pixel_array[i])
+
+                self.pixel_array[i] = color
+
 
 if __name__ == "__main__":
-    the_bitmap = Bitmap.read_file('test.bmp')
-    print(the_bitmap.source)
-    the_bitmap.write_file('file3.bmp')
+    the_bitmap = Bitmap.read_file('bmp.bmp')
+    # print(the_bitmap.get_headers())
+    the_bitmap.invert()
+    the_bitmap.write_file('test4.bmp')
