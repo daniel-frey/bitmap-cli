@@ -4,7 +4,7 @@ import random
 
 class Bitmap(object):
     def __init__(self, file_data):
-        """Initialization method for Bitmap instance.
+        """Initialize method for Bitmap instance.
 
         Provides itemized data related to consumed Bitmap file through the use of a MemoryView object.
         """
@@ -37,8 +37,7 @@ class Bitmap(object):
                 print('The file could not be written')
 
     def get_headers(self):
-        """Instance Method which provides instance source data as readable output to std out.
-        """
+        """Instance Method which provides instance source data as readable output to std out."""
         import struct as s
         result = f'''
             Type: {self.memory_view[0:2].tobytes().decode()}
