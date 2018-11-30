@@ -1,5 +1,4 @@
 import struct
-import random
 
 
 class Bitmap(object):
@@ -60,14 +59,30 @@ class Bitmap(object):
         return result
 
     def invert(self):
-            """Invert the colors of a bitmap.
+        """Invert the colors of a bitmap file. This is transform number 1.
 
-            No input/output
+        No input/output
             """
-            for i in range(len(self.pixel_array)):
-                color = abs(255 - self.pixel_array[i])
+        for i in range(len(self.pixel_array)):
+            color = abs(255 - self.pixel_array[i])
 
-                self.pixel_array[i] = color
+            self.pixel_array[i] = color
+
+    def blue(self):
+        """Turn all of the file blue/green(ish)."""
+        for i in range(0, len(self.color_table) - 2, 4):
+            self.color_table[i+2] = 0
+
+    def purple(self):
+        """Turn all of the file to a purple color."""
+        for i in range(0, len(self.color_table) - 2, 4):
+            self.color_table[i+1] = 0
+
+    def random_color(self):
+        """Assign random colors to the file."""
+        from random import randint
+        for i in range(0, len(self.color_table) - 1):
+            self.color_table[i] = randint(0, 255)
 
 
 if __name__ == "__main__":
@@ -75,3 +90,9 @@ if __name__ == "__main__":
     # print(the_bitmap.get_headers())
     the_bitmap.invert()
     the_bitmap.write_file('test4.bmp')
+    # the_bitmap.random_color()
+    # the_bitmap.write_file('test5.bmp')
+    # the_bitmap.purple()
+    # the_bitmap.write_file('test6.bmp')
+    # the_bitmap.blue()
+    # the_bitmap.write_file('test8.bmp')

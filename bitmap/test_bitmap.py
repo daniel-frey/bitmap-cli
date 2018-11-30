@@ -17,3 +17,8 @@ def test_write_file_error():
     actual = 'wrong'
     with pytest.raises(TypeError):
         assert Bitmap.write_file(actual)
+
+
+def test_file_transform_success():
+    """Tests the the file transformed correctly."""
+    pass
