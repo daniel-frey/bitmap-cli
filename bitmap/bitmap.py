@@ -58,7 +58,7 @@ class Bitmap(object):
         '''
         return result
 
-    def invert(self):
+    def invert(self, target):
         """Invert the colors of a bitmap file. This is transform number 1.
 
         No input/output
@@ -68,17 +68,17 @@ class Bitmap(object):
 
             self.pixel_array[i] = color
 
-    def blue(self):
+    def blue(self, target):
         """Turn all of the file blue/green(ish)."""
         for i in range(0, len(self.color_table) - 2, 4):
             self.color_table[i+2] = 0
 
-    def purple(self):
+    def purple(self, target):
         """Turn all of the file to a purple color."""
         for i in range(0, len(self.color_table) - 2, 4):
             self.color_table[i+1] = 0
 
-    def random_color(self):
+    def random_color(self, target):
         """Assign random colors to the file."""
         from random import randint
         for i in range(0, len(self.color_table) - 1):
@@ -88,8 +88,8 @@ class Bitmap(object):
 if __name__ == "__main__":
     the_bitmap = Bitmap.read_file('bmp.bmp')
     # print(the_bitmap.get_headers())
-    the_bitmap.invert()
-    the_bitmap.write_file('test4.bmp')
+    # the_bitmap.invert()
+    # the_bitmap.write_file('test4.bmp')
     # the_bitmap.random_color()
     # the_bitmap.write_file('test5.bmp')
     # the_bitmap.purple()
