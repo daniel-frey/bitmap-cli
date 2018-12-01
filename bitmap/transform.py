@@ -1,5 +1,6 @@
 import cmd
 import sys
+import bitmap
 
 
 class BitmapManipulator(cmd.Cmd):
@@ -16,7 +17,8 @@ class BitmapManipulator(cmd.Cmd):
         Returns a line-item response of the file's header data.
         """
         # TODO: Complete these CLI methods for performing described actions
-        pass
+        read_headers = bitmap.Bitmap.read_file(source)
+        print(read_headers.get_headers())
 
     def do_transform(self, arg):
         """
@@ -29,17 +31,25 @@ class BitmapManipulator(cmd.Cmd):
         Creates a new file at 'new' location with the provided 'transform' applied to the new file.
         """
         # TODO: Complete these CLI methods for performing described actions
-        pass
+        arg_split = arg.split()
+
+        check_args = bitmap.Bitmap.read_file(arg_split[0])
+        if arg_split[2] == 'invert':
+            check_args.invert('invert')
+        if arg_split[2] == 'red':
+            check_args.red('red')
+        if arg_split[2] == 'blue':
+            check_args.blue('blue')
+        if arg_split[2] == 'random_color':
+            check_args.random_color('random_color')
+
+        check_args.write_file(arg_split[1])
 
     @staticmethod
     def do_exit(args):
-        """
-        To use this type in 'exit' and the CLI tool will cleanly exit the running application.
-        """
+        """To use this type in 'exit' and the CLI tool will cleanly exit the running application."""
         sys.exit()
 
 
 if __name__ == '__main__':
     BitmapManipulator().cmdloop()
-
-
