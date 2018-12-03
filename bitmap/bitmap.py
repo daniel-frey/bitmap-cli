@@ -1,5 +1,4 @@
 import struct
-import random
 
 
 class Bitmap(object):
@@ -39,7 +38,7 @@ class Bitmap(object):
     def get_headers(self):
         """Instance Method which provides instance source data as readable output to std out."""
         import struct as s
-        result = f'''
+        result = f"""
             Type: {self.memory_view[0:2].tobytes().decode()}
             Size: {s.unpack('I', self.memory_view[2:6].tobytes())[0]}
             Reserved 1: {s.unpack('H', self.memory_view[6:8].tobytes())[0]}
@@ -56,22 +55,44 @@ class Bitmap(object):
             Vertical Resolution: {s.unpack('I', self.memory_view[42:46].tobytes())[0]}
             Number of Colours: {s.unpack('I', self.memory_view[46:50].tobytes())[0]}
             Important Colours: {s.unpack('I', self.memory_view[50:54].tobytes())[0]}
-        '''
+        """
         return result
 
-    def invert(self):
-            """Invert the colors of a bitmap.
+    def invert(self, target):
+        """Invert the colors of a bitmap file. This is transform number 1.
 
-            No input/output
+        No input/output
             """
-            for i in range(len(self.pixel_array)):
-                color = abs(255 - self.pixel_array[i])
+        for i in range(len(self.pixel_array)):
+            color = abs(255 - self.pixel_array[i])
 
-                self.pixel_array[i] = color
+            self.pixel_array[i] = color
+
+    def blue(self, target):
+        """Turn all of the file blue/green(ish)."""
+        for i in range(0, len(self.color_table) - 2, 4):
+            self.color_table[i+2] = 0
+
+    def purple(self, target):
+        """Turn all of the file to a purple color."""
+        for i in range(0, len(self.color_table) - 2, 4):
+            self.color_table[i+1] = 0
+
+    def random_color(self, target):
+        """Assign random colors to the file."""
+        from random import randint
+        for i in range(0, len(self.color_table) - 1):
+            self.color_table[i] = randint(0, 255)
 
 
 if __name__ == "__main__":
     the_bitmap = Bitmap.read_file('bmp.bmp')
     # print(the_bitmap.get_headers())
-    the_bitmap.invert()
-    the_bitmap.write_file('test4.bmp')
+    # the_bitmap.invert()
+    # the_bitmap.write_file('test4.bmp')
+    # the_bitmap.random_color()
+    # the_bitmap.write_file('test5.bmp')
+    # the_bitmap.purple()
+    # the_bitmap.write_file('test6.bmp')
+    # the_bitmap.blue()
+    # the_bitmap.write_file('test8.bmp')
