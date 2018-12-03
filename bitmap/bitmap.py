@@ -38,7 +38,7 @@ class Bitmap(object):
     def get_headers(self):
         """Instance Method which provides instance source data as readable output to std out."""
         import struct as s
-        result = f'''
+        result = f"""
             Type: {self.memory_view[0:2].tobytes().decode()}
             Size: {s.unpack('I', self.memory_view[2:6].tobytes())[0]}
             Reserved 1: {s.unpack('H', self.memory_view[6:8].tobytes())[0]}
@@ -55,7 +55,7 @@ class Bitmap(object):
             Vertical Resolution: {s.unpack('I', self.memory_view[42:46].tobytes())[0]}
             Number of Colours: {s.unpack('I', self.memory_view[46:50].tobytes())[0]}
             Important Colours: {s.unpack('I', self.memory_view[50:54].tobytes())[0]}
-        '''
+        """
         return result
 
     def invert(self, target):
